@@ -8,9 +8,12 @@ export class Task {
     @Column()
     description: string;
 
-    @Column()
+    @Column({default: () => "CURRENT_TIMESTAMP"})
     createdAt: Date;
 
     @Column({ default: false })
     done: boolean;
+
+    @Column()
+    priority: number;
 }

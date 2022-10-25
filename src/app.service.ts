@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import {TodoDto} from "./dto";
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository} from 'typeorm';
 import {Task} from "./app.entity";
 
 @Injectable()
 export class AppService {
   constructor(
       @InjectRepository(Task)
-      private taskRepository: Repository<Task>,
+      private taskRepository: Repository<Task>
   ) {}
 
   get(id: string): Promise<Task> {
@@ -19,16 +19,19 @@ export class AppService {
     return this.taskRepository.find();
   }
 
-  create(dto: TodoDto): string {
-    return 'Create';
+  async create(dto: TodoDto): Promise<any>  {
+    return this.taskRepository.save(dto)
   }
 
-  update(id: string, dto: TodoDto): string {
-    return 'Update';
+  update(id: string, dto: TodoDto): Promise<any> {
+    return this.taskRepository.save({
+      id: parseInt(id, 10),
+      ...dto
+    })
   }
 
-  delete(id:string): string {
-    return 'Delete';
+  async delete(id:string): Promise<void> {
+    await this.taskRepository.delete(id)
   }
 
 }

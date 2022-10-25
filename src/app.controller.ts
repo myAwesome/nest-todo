@@ -12,7 +12,7 @@ export class AppController {
   }
 
   @Post()
-  create(@Body() dto: TodoDto): string {
+  create(@Body() dto: TodoDto): Promise<any> {
     return this.appService.create(dto);
   }
 
@@ -22,12 +22,12 @@ export class AppController {
   }
 
   @Put(':id')
-  update(@Param() params, @Body() dto: TodoDto): string {
+  update(@Param() params, @Body() dto: TodoDto): Promise<any> {
     return this.appService.update(params.id, dto);
   }
 
   @Delete(':id')
-  delete(@Param() params): string {
+  delete(@Param() params): Promise<void> {
     return this.appService.delete(params.id);
   }
 }

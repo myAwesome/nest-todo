@@ -1,6 +1,6 @@
 export class TodoDto {
-    name: string;
-    isDone: boolean;
+    description: string;
+    done: boolean;
     priority: number;
     createdAt: number;
 }
