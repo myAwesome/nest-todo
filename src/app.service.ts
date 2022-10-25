@@ -1,14 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import {TodoDto} from "./dto";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import {Task} from "./app.entity";
 
 @Injectable()
 export class AppService {
-  get(id:string): string {
-    return 'Get';
+  constructor(
+      @InjectRepository(Task)
+      private taskRepository: Repository<Task>,
+  ) {}
+
+  get(id: string): Promise<Task> {
+    return this.taskRepository.findOneBy({ id:parseInt(id, 10) });
   }
 
-  list(): string {
-    return 'List';
+  list(): Promise<Task[]> {
+    return this.taskRepository.find();
   }
 
   create(dto: TodoDto): string {

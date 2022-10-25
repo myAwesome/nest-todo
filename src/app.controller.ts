@@ -1,12 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import {ListAllEntities, TodoDto} from "./dto";
+import {Task} from "./app.entity";
 
 @Controller('todo')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get() list(@Query() query: ListAllEntities): string {
+  @Get() list(@Query() query: ListAllEntities): Promise<Task[]> {
     return this.appService.list();
   }
 
@@ -16,7 +17,7 @@ export class AppController {
   }
 
   @Get(':id')
-  get(@Param() params): string {
+  get(@Param() params): Promise<Task> {
     return this.appService.get(params.id);
   }
 
